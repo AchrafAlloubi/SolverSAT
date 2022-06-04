@@ -2,6 +2,7 @@ import org.junit.Test;
 import stev.booleans.Source.Core.src.stev.booleans.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
  // #26###81#3##7#8##64###5###7#5#1#7#9###39#51###4#3#2#5#1###3###25##2#4##9#38###46#
@@ -28,10 +29,26 @@ public class Main {
         OneNumberInEachRow(Sudoku);
         OneNumberInEachColumn(Sudoku);
         OneNumberInEach3x3(Sudoku);
+
         System.out.println(X.evaluate(v));
         System.out.println(Y.evaluate(v));
         System.out.println(Z.evaluate(v));
         System.out.println(T.evaluate(v));
+
+        And big_formula = new And(X,Y,Z,T);
+        BooleanFormula cnf = BooleanFormula.toCnf(big_formula);
+
+        // Export this formula as an array of clauses
+        int[][] clauses = cnf.getClauses();
+
+        // What's in that array? First element corresponds to first clause: [1, -2, 3]
+        System.out.println(Arrays.toString(clauses[0]));
+        // Second element corresponds to second clause: [1, -3, 4]
+        System.out.println(Arrays.toString(clauses[1]));
+
+//        // What is the integer associated to variable q?
+//        Map<String,Integer> associations = cnf.getVariablesMap();
+//        System.out.println("Variable q is associated to number " + associations.get("q"));
     }
 
     private static void boxContainsOnlyOneNumber(String Sudoku) {
@@ -97,5 +114,7 @@ public class Main {
          }
          v.put("t", value);
      }
+
+
 
 }
