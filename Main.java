@@ -1,12 +1,18 @@
 import org.junit.Test;
 import stev.booleans.Source.Core.src.stev.booleans.*;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
  // #26###81#3##7#8##64###5###7#5#1#7#9###39#51###4#3#2#5#1###3###25##2#4##9#38###46#
+
+ /*
+ Achraf ALLOUBI       : ALLA11069909
+ Mohamed amine AMGHAR : AMGM17119906
+ Mohamed-wajih ALAOUI : ALAM05129904
+ */
+
 public class Main {
     public static Valuation v = new Valuation();
 
