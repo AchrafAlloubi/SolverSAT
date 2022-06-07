@@ -30,11 +30,6 @@ public class Main {
 
     public static final PropositionalVariable T = new PropositionalVariable("t");
 
-    public static final PropositionalVariable U = new PropositionalVariable("u");
-
-    public static final PropositionalVariable P = new PropositionalVariable("p");
-
-    public static final PropositionalVariable Q = new PropositionalVariable("q");
 
     public static void main(String[] args) throws ContradictionException, TimeoutException {
         String Sudoku = args[0];
@@ -53,10 +48,8 @@ public class Main {
 
         // Export this formula as an array of clauses
         int[][] clauses = cnf.getClauses();
-
-
-        System.out.println(Arrays.toString(clauses[0]));
-        System.out.println(Arrays.toString(clauses[1]));
+        //System.out.println(Arrays.toString(clauses[0]));
+        // System.out.println(Arrays.toString(clauses[1]));
 
        // What is the integer associated to variable x?
         Map<String,Integer> associations = cnf.getVariablesMap();
