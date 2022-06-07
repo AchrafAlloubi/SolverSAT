@@ -1,11 +1,17 @@
 import org.junit.Test;
+import org.sat4j.core.VecInt;
+import org.sat4j.minisat.SolverFactory;
+import org.sat4j.specs.ContradictionException;
+import org.sat4j.specs.IProblem;
+import org.sat4j.specs.ISolver;
+import org.sat4j.specs.TimeoutException;
 import stev.booleans.Source.Core.src.stev.booleans.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
-
 import static org.junit.Assert.assertEquals;
  // #26###81#3##7#8##64###5###7#5#1#7#9###39#51###4#3#2#5#1###3###25##2#4##9#38###46#
+
 
  /*
  Achraf ALLOUBI       : ALLA11069909
@@ -30,7 +36,7 @@ public class Main {
 
     public static final PropositionalVariable Q = new PropositionalVariable("q");
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws ContradictionException, TimeoutException {
         String Sudoku = args[0];
         boxContainsOnlyOneNumber(Sudoku);
         OneNumberInEachRow(Sudoku);
@@ -52,10 +58,29 @@ public class Main {
         System.out.println(Arrays.toString(clauses[0]));
         System.out.println(Arrays.toString(clauses[1]));
 
-       // What is the integer associated to variable q?
+       // What is the integer associated to variable x?
         Map<String,Integer> associations = cnf.getVariablesMap();
         System.out.println("Variable X is associated to number " + associations.get("x"));
+        int MAXVAR = 1000000;
+        int NBCLAUSES = 4;
+
+        ISolver solver = SolverFactory.newDefault();
+        solver.newVar(MAXVAR);
+        solver.setExpectedNumberOfClauses(NBCLAUSES);
+
+        for(int[] clause : clauses) {
+            solver.addClause(new VecInt(clause)); // adapt Array to IVecInt
+        }
+
+        IProblem problem = solver;
+        if (problem.isSatisfiable()) {
+            System.out.println("Satisfiable !");
+            System.out.println(problem.model());
+        } else {
+            System.out.println("Unsatisfiable !");
+        }
     }
+
 
     private static void boxContainsOnlyOneNumber(String Sudoku) {
         boolean value = (Sudoku.length()== 81);
@@ -107,6 +132,7 @@ public class Main {
                          int YCoordinate = ThreeByThreeAxisY * 3 + j;
                          int Index = XCoordinate*9 + YCoordinate;
                          char c = Sudoku.charAt(Index);
+
                          if(c!='#' && b.contains(c)){
                              value = false;
                          }
